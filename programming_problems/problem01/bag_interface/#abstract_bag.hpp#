@@ -1,10 +1,12 @@
-#include <iostream>
+#ifndef _ABSTRACT_BAG_HPP_
+#define _ABSTRACT_BAG_HPP_
 
-class AbstractBag{
+#include <iostream>
+#include <cstdlib>
+template<typename T>
+class AbstractBag
+{
 public:
-	virtual void Bag() = 0;
-	
-	virtual void ~Bag() = 0;
 	
 	virtual std::size_t getCurrentSize() const = 0;
 	
@@ -21,3 +23,4 @@ public:
 	virtual bool contains(const T& entry) const = 0;
 }
 
+#endif
