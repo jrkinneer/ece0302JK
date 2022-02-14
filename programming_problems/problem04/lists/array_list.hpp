@@ -41,9 +41,10 @@ public:
   // set the value of the item at position using 1-based indexing
   void setEntry(std::size_t position, const T& newValue);
 
-private:
-
-  // TODO
+private:  
+  std::size_t arrSize; //keeps track of the current max size of the array,
+  //also used in comparison against arrIndex to determine if the array needs   resized.
+  T *arr; //points to the dynamically allocated array
   
 };
 

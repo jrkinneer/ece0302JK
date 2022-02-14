@@ -44,7 +44,8 @@ public:
 
 private:
 
-  //TODO
+  std::size_t count;
+  Node<T> *headlistptr;
   
 };
 
