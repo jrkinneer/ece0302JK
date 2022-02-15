@@ -4,12 +4,17 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 class FindPalindrome{
 
 private:
 	// private stuff that you define and implement goes here...
 	
-	// ...
+  int numPals; //tracks the amount of palindromes
+  vector<string> sentence, empty; //temporary vectors
+  vector<vector<string>> palin;
+  //a vector that hold vectors that are palindromes
 	
 	// private stuff that you are given or is specified in the project
 	// description...
@@ -18,13 +23,10 @@ private:
 	    change the signature. The method must call itself recursively.
 	    Failure to follow either of the above two rules will result in
 	    a grade of zero for the project. */
-	void recursiveFindPalindromes(std::vector<std::string> currentCandidateVector, 
-			   	                  std::vector<std::string> currentStringVector);
+	void recursiveFindPalindromes(std::vector<std::string> currentCandidateVector, 	std::vector<std::string> currentStringVector);
 	
 	/** function to see if a string is a palindrome (provided).
-	  You may use the provided function, write your own, or use one of the billions
-	  of palindrome functions available on the Internet. Note: you probably 
-	  do not want to use a recursive version for this test (as it is 
+	  You may use the provided function, write your own, or use one of the billions of palindrome functions available on the Internet. Note: you probably  do not want to use a recursive version for this test (as it is 
 	  inefficient). You may change the signature of this function. */
 	bool isPalindrome(std::string currentString) const;
 	
@@ -58,15 +60,14 @@ public:
 	bool add(const std::string & value);
 	
 	/** Adds a new vector of strings to this FindPalindrome instance and
-	   computes the number of palindrome sentences possible. Note: You may
-	   not implement this method by repeatedly calling the add(string) method
-	   as this would be very inefficient. Implementing this method by repeatedly
-	   calling add(string) will result in a grade of zero for the project. Again,
-	   note that the strings added must be unique per the project description.
+	 computes the number of palindrome sentences possible. Note: You may not implement this method by repeatedly calling the add(string) method
+ as this would be very inefficient. Implementing this method by repeatedly
+ calling add(string) will result in a grade of zero for the project. Again,
+ note that the strings added must be unique per the project description.
 	   @post  If successful, the vector of strings has been added to the 
-	    FindPalindrome instance, and the sentence palindromes for the instance 
+ FindPalindrome instance, and the sentence palindromes for the instance 
 	    have been recomputed.
-	   @param stringVector  The vector of strings to add to the instance of
+ @param stringVector  The vector of strings to add to the instance of
 	    FindPalindrome.
 	   @return  True if addition was successful, or false if not. */
 	bool add(const std::vector<std::string> & stringVector);
@@ -78,15 +79,15 @@ public:
 	   @return  True if the vector passes the test, false otherwise. */
 	bool cutTest1(const std::vector<std::string> & stringVector);
 
-	/** Cut test #2 to see if a palindrome is possible, if not, no need to go any 
-            further. We don't know which vector of strings has the fewer number
-            characters. However, for whichever vector of strings has the fewest 
-            number of characters, all of those characters must appear in the
-            other string vector with more (or an equal) number of each character.
-            For example, if the string with the fewer number of characters has
-            two 'a's and three 'b's, the other string must have at least this
-            number of the characters 'a' and 'b'. The count of characters 
-            should be case insensitive.
+	/** Cut test #2 to see if a palindrome is possible, if not, no need to go any further. We don't know which vector of strings has the fewer number
+ characters. However, for whichever vector of strings has the fewest 
+ number of characters, all of those characters must appear in the
+ other string vector with more (or an equal) number of each character.
+ 
+For example, if the string with the fewer number of characters has
+  two 'a's and three 'b's, the other string must have at least this
+  number of the characters 'a' and 'b'. The count of characters 
+  should be case insensitive.
             See the project description for how this method is to be used.
 	   @param stringVector1  A vector of strings.
 	   @param stringVector2  A vector of strings. 
@@ -95,8 +96,7 @@ public:
 			      const std::vector<std::string> & stringVector2);
 
 	/** Returns a vector of vectors containing all palindromes. Each
-	    palindrome is returned as a vector of strings, where the strings include
-	    all current strings added to the FindPalindrome instance.
+	    palindrome is returned as a vector of strings, where the strings includ all current strings added to the FindPalindrome instance.
 	@return  A vector of vectors containing all palindromes. */
 	std::vector< std::vector<std::string> > toVector() const;
 
