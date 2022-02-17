@@ -42,24 +42,24 @@ bool isPost(string s) {
 }
 
 void convert(string &postfix, string &prefix) {
-  //need to shift the operators to the left by two
-  //or i guess shift the operands to the right by two
-  
-  //place the last character in postfix in a variable
-  //then remove it from postfix
+  //finds the last character in postfix
   char last = postfix.back();
 
-  //base case is if the last character of post is a letter
-  //if it is alpha append to prefix
+  //if last is a letter, that means we have already gotten
+  //all of the operators to the front of prefix
+  //so we cycle through all of remainig post fix, keeping the
+  //order of the letters in postfix, and appending them to 
+  //prefix
   if (isalpha(last)){
     for (int i = 0; i < postfix.size(); i++){
       prefix.push_back(postfix.at(i));
     }
   }
   else{
-  //if not append anyway, 
-  //call convert twice, with any empty string and once with
-  //the new prefix
+    //if last isn't a letter that makes it an operator,
+    //so we append it to prefix and then remove it from postfix
+    //then we call the function recursively until all the 
+    //operators are moved and only letters remain
     prefix.push_back(last);
     postfix.pop_back();
     convert(postfix, prefix);
