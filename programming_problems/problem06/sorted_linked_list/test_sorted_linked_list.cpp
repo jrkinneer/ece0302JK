@@ -179,17 +179,14 @@ TEST_CASE("Testing exceptions", "[sorted linked list]") {
 
   CHECK_THROWS_AS(lst.removeAt(0), std::range_error);
   CHECK_THROWS_AS(lst.getEntry(0), std::range_error);
-
   lst.insert('a');
   lst.insert('b');
   lst.insert('c');
   lst.insert('d');
-
   CHECK_THROWS_AS(lst.removeAt(4), std::range_error);
   CHECK_THROWS_AS(lst.removeAt(5), std::range_error);
   CHECK_THROWS_AS(lst.getEntry(4), std::range_error);
   CHECK_THROWS_AS(lst.getEntry(5), std::range_error);
-
   CHECK_THROWS_AS(lst.removeAt(-1), std::range_error);
   CHECK_THROWS_AS(lst.getEntry(-1), std::range_error);
 }

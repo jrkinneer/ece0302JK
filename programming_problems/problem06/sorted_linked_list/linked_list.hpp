@@ -47,7 +47,8 @@ public:
 
 private:
 
-  //TODO
+  Node<T> *listPtr;
+  std::size_t presentSize;
   
 };
 
