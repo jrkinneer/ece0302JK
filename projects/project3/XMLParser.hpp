@@ -11,7 +11,7 @@
 #include "Stack.hpp"
 
 /** enum definition for possible string token types. */
-typedef enum {START_TAG=1, END_TAG, EMPTY_TAG, CONTENT, DECLARATION} StringTokenType;
+typedef enum {START_TAG=1, END_TAG=2, EMPTY_TAG=3, CONTENT=4, DECLARATION=5} StringTokenType;
 
 /** TokenStruct definition. Used to store tokens and their corresponding types. */
 typedef struct _TokenStruct_ {
@@ -28,7 +28,8 @@ private:
 	Stack<std::string>* parseStack;
 	/** Vector to store the tokenized input string and the token types */
 	std::vector<TokenStruct> tokenizedInputVector;
-  
+	
+	bool valid;	//tracks the validity of the tags?
   // You can add or change the private fields.
 
 public:
@@ -90,6 +91,11 @@ public:
 	void clear();
 	/** The class destructor. Must free all allocated memory. */
 	~XMLParser();
+
+	static string tagNameCreator(const string tag);
+	//takes whole tag found in tokenizeInputString and finds
+	//the appropriate tag name from that string
+
 }; // end XMLParser
 
 #endif
