@@ -19,6 +19,7 @@ TEST_CASE("Testing 1", "[queue]") {
   REQUIRE_FALSE(queue.isEmpty());
   REQUIRE(queue.peekFront() == 12);
 
+  std::cout<<"pass batch 1"<<std::endl;
   queue.dequeue();
   queue.dequeue();
   REQUIRE(queue.isEmpty());
@@ -34,14 +35,15 @@ TEST_CASE("Testing 1", "[queue]") {
   queue.enqueue(62);
   REQUIRE_FALSE(queue.isEmpty());
   REQUIRE(queue.peekFront() == 241);
-
-  Queue<int, DynamicArrayList<int>> another_queue;
-  another_queue = queue;
-
+  std::cout<<"pass batch 2"<<std::endl;
+  Queue<int, DynamicArrayList<int>> another_queue(queue);
+  
+  std::cout<<"pass batch 3"<<std::endl;
   REQUIRE_FALSE(another_queue.isEmpty());
   REQUIRE(another_queue.peekFront() == 241);
   another_queue.dequeue();
   REQUIRE(another_queue.peekFront() == 45);
   another_queue.dequeue();
   REQUIRE(another_queue.peekFront() == 62);
+  std::cout<<"pass batch 4"<<std::endl;
 }
