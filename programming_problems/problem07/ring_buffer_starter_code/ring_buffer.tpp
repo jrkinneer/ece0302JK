@@ -15,14 +15,14 @@ RingBuffer<T>::RingBuffer(std::size_t size)
 template <typename T> 
 bool RingBuffer<T>::enqueue_front(const T& item){
   if(count != queueLength){
-    for (std::size_t i = 0; i < count; i++){
-      data[i + 1] = data[i];
+    if (count >= 1){
+      for (std::size_t i = count; i > 0; i--){
+        data[i] = data[i-1];
+      }
     }
-    data[front] = item;
-    std::cout<<data[front]<<std::endl;
-    std::cout<<data[1]<<"\n"<<std::endl;
     count++;
-    back = count;
+    data[front] = item;
+    back = (back + 1) % queueLength;
     return true;
   }
   return false;
@@ -33,9 +33,10 @@ T RingBuffer<T>::dequeue_back(){
   assert(count > 0);
 
   T value;
-  value = data[count];
+  
+  value = data[back];
   count--;
-  back = count;
+  back = (back - 1) % queueLength;
   return value;
 }
 

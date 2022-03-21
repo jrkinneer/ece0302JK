@@ -33,4 +33,8 @@ TEST_CASE("Test 2", "[ring_buffer]") {
   REQUIRE(buff.enqueue_front(4));
   
   REQUIRE(buff.dequeue_back() == 9);
+  REQUIRE(buff.dequeue_back() == 8);
+  REQUIRE(buff.dequeue_back() == 7);
+  REQUIRE(buff.dequeue_back() == 6);
+
 }
