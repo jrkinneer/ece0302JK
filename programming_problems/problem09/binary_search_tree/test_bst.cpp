@@ -30,10 +30,15 @@ TEST_CASE("Test Retrieve", "[retrieve]") {
     TreeType bst1;
 
     bst1.insert(10, 10);
+    //std::cout<<"pass insert one"<<std::endl;
     bst1.insert(5, 5);
+    //std::cout<<"pass insert two"<<std::endl;
     bst1.insert(15, 15);
+    //std::cout<<"pass insert three"<<std::endl;
     bst1.insert(12, 12);
+    //std::cout<<"pass insert four"<<std::endl;
     bst1.insert(18, 18);
+    //std::cout<<"completed insertions"<<std::endl;
 
     int item;
     REQUIRE(bst1.retrieve(18, item));
@@ -41,6 +46,7 @@ TEST_CASE("Test Retrieve", "[retrieve]") {
     REQUIRE(bst1.retrieve(15, item));
     REQUIRE(bst1.retrieve(5, item));
     REQUIRE(bst1.retrieve(10, item));
+    //std::cout<<"pass retrieve"<<std::endl;
 }
 
 TEST_CASE("Test Remove", "[remove]") {
@@ -51,7 +57,7 @@ TEST_CASE("Test Remove", "[remove]") {
     bst1.insert(15, 15);
     bst1.insert(12, 12);
     bst1.insert(18, 18);
-
+    std::cout<<"completed insertions"<<std::endl;
     int item;
 
     bst1.remove(12);
@@ -70,6 +76,7 @@ TEST_CASE("Test Remove", "[remove]") {
     REQUIRE(!bst1.retrieve(15, item));
 
     REQUIRE(bst1.isEmpty());
+    std::cout<<"pass remove"<<std::endl;
 }
 
 TEST_CASE("Test Copy Assign", "[copy assign]") {
@@ -93,6 +100,7 @@ TEST_CASE("Test Copy Assign", "[copy assign]") {
     REQUIRE(bst2.retrieve(50, item));
     REQUIRE(bst2.retrieve(25, item));
     REQUIRE(!bst2.retrieve(51, item));
+    std::cout<<"pass copy assign"<<std::endl;
     
 }
 

@@ -101,7 +101,56 @@ template <typename KeyType, typename ItemType>
 bool BinarySearchTree<KeyType, ItemType>::insert(
     const KeyType& key, const ItemType& item)
 {
-    // TODO 
+    // TODO
+    //so we need to compare the key value of the 
+    //node to be inserted to the nearest node with open
+    //branches and then add it to the left or right
+    //to do this i am going to use the searcg function to 
+    //find the node with the closest key value that has empty
+    //branches that our input key can legally fill
+    KeyType placeHolder1 = key;
+    ItemType placeHolder2 = item;
+    bool duplicate = retrieve(placeHolder1, placeHolder2);
+    if (!duplicate){
+        //basecase for if empty
+        //std::cout<<"passed non duplicate"<<std::endl;
+        if (isEmpty()){
+            //std::cout<<"isEmpty condition"<<std::endl;
+            root = new Node<KeyType, ItemType>;
+            root->data = item;
+            root->key = key;
+            //std::cout<<"\n"<<std::endl;
+            return true;
+        }
+        else{
+            std::cout<<"non empty condition"<<std::endl;
+            Node<KeyType, ItemType> *currentPtr;
+            Node<KeyType, ItemType> *parentPtr;
+            //won't really need to use to the parent pointer
+            //but I need a filler input
+            search(key, currentPtr, parentPtr);
+
+            //so now currentPtr has been updated
+            if (key < currentPtr->key){
+                //std::cout<<"left branch condition"<<std::endl;
+                Node<KeyType, ItemType>* newNodePtr = new Node<KeyType, ItemType>;
+                currentPtr->left = newNodePtr;
+                newNodePtr->data = item;
+                newNodePtr->key = key;
+                //std::cout<<"\n"<<std::endl;
+                return true;
+            }
+            else{
+                //std::cout<<"right branch condition"<<std::endl;
+                Node<KeyType, ItemType>* newNodePtr = new Node<KeyType, ItemType>;
+                currentPtr->right = newNodePtr;
+                newNodePtr->data = item;
+                newNodePtr->key = key;
+                //std::cout<<"\n"<<std::endl;
+                return true;
+            }//end nested if/else
+        }//end isEmpty if/else
+    }//end check for duplicate item
     return false;
 }
 
@@ -138,17 +187,89 @@ bool BinarySearchTree<KeyType, ItemType>::remove(KeyType key)
 
     // TODO
 
+    Node<KeyType, ItemType> *currentPtr;
+    Node<KeyType, ItemType> *parentPtr;
+    search(key, currentPtr, parentPtr);
 
-    // case one thing in the tree
+    //check for key match
+    if (currentPtr->key != key){
+        return false;
+    }
 
-    // case, found deleted item at leaf
+    //if our deleted node is a leaf
+    if (currentPtr->left == 0 && currentPtr->right == 0){
+        //if our deleted node is not the root
+        if (parentPtr != nullptr){
+            if (parentPtr->key > key){
+                parentPtr->left = nullptr;
+            }
+            else{
+                parentPtr->right = nullptr;
+            }
+        }
+        //if our deleted node is the root
+        else{
+            root = nullptr;
+        }
+        delete currentPtr;
+        return true;
+    }
+    //deleted node has a right child
+    else if(currentPtr->left == 0 && currentPtr->right != 0){
+        //check for current node not equal root
+        if (parentPtr != 0){
+            //compares parent key to delete key, 
+            //to know what side to attach to
+            if (parentPtr->key > key){
+                parentPtr->left = currentPtr->right;
+            }
+            else{
+                parentPtr->right = currentPtr->right;
+            }
+        }
+        else{
+            root = currentPtr->right;
+        }
+        delete currentPtr;
+        return true;
+    } 
+    //deleted node has left child
+    else if(currentPtr->left != 0 && currentPtr->right == 0){
+        //check for current node not equal root
+        if (parentPtr != 0){
+            //compares parent key to delete key, 
+            //to know what side to attach to
+            if (parentPtr->key > key){
+                parentPtr->left = currentPtr->left;
+            }
+            else{
+                parentPtr->right = currentPtr->left;
+            }
+        }
+        else{
+            root = currentPtr->left;
+        }
+        delete currentPtr;
+        return true;
+    }
+    //deleted node has two children
+    else if(currentPtr->left != 0 && currentPtr->right != 0){
+        Node<KeyType, ItemType> *inorder_succ = currentPtr->right;
+        Node<KeyType, ItemType> *inorder_succ_par = parentPtr;
+        inorder(inorder_succ, currentPtr, inorder_succ_par);
+        currentPtr->data = inorder_succ->data;
+        currentPtr->key = inorder_succ->key;
 
-    // case, item to delete has only a right child
+        if (inorder_succ->right != 0){
+            inorder_succ_par->left = inorder_succ->right;
+        }
+        else{
+            inorder_succ_par->left = nullptr;
+        }
 
-    // case, item to delete has only a left child
-
-    // case, item to delete has two children
-
+        delete inorder_succ;
+        return true;
+    }
     return false; // default should never get here
 }
 
@@ -157,7 +278,14 @@ void BinarySearchTree<KeyType, ItemType>::inorder(Node<KeyType, ItemType>* curr,
     Node<KeyType, ItemType>*& in, Node<KeyType, ItemType>*& parent)
 {
     // TODO: find inorder successor of "curr" and assign to "in"
+    if (curr->left == 0){
+        in = curr;
+        return;
+    }
 
+    inorder(curr->left, in, curr);
+
+    return;
 }
 
 template <typename KeyType, typename ItemType>
@@ -191,9 +319,31 @@ void BinarySearchTree<KeyType, ItemType>::search(KeyType key,
 
 template<typename KeyType, typename ItemType>
 void BinarySearchTree<KeyType, ItemType>::treeSort(ItemType arr[], int size) {
-    // TODO: check for duplicate items in the input array
+   
+    for (int i = 0; i < size; i++){
+        for (int j = 0; j < i; j++){
+            if (arr[i] == arr[j]){
+                throw std::range_error("cannot have duplicate items");
+            }
+        }
+    }
 
-    // TODO: use the tree to sort the array items
+    BinarySearchTree<KeyType, ItemType> tree;
+    Node<KeyType, ItemType>* parentPtr = 0;
 
-    // TODO: overwrite input array values with sorted values
+    for (int i = 0; i < size; i++){
+        tree.insert(arr[i], arr[i]);
+    }
+
+    Node<KeyType, ItemType> *index;
+    index = tree.root;
+    
+    for (int i = 0; i < size; i++){
+        index = tree.root;
+        tree.inorder(tree.root, index, parentPtr);
+        arr[i] = index->key;
+        tree.remove(index->key);
+    }
+
+    tree.destroy();
 }
