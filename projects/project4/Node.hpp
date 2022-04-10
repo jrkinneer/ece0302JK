@@ -1,7 +1,7 @@
 #ifndef NODE_
 #define NODE_
 
-template<class ItemType>
+template<typename ItemType>
 class Node
 {
 private:
